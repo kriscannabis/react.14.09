@@ -9,7 +9,7 @@ class App extends React.Component {
     return (
     <div>
         hello
-        <Message count="2" />
+        <Message count="21" />
     </div>
     )
   }
