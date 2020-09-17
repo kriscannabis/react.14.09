@@ -15,6 +15,15 @@ class HelloMessage extends Component {
     ],
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    const { messages } = this.state;
+    if (messages.length % 2 === 0) {
+      setTimeout(() => {
+        this.addMessage({ author: "Bot", message: "привет, я бот" });
+      }, 500);
+    }
+  }
+
   addMessage = (message) => {
     const { messages } = this.state;
 
