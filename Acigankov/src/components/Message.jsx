@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const Message = ( { count } ) => {
+const Message = ( { item } ) => {
     return (
-        <div>
-            <h2>{count}</h2>
-        </div>
+        <li>
+            {item}
+        </li>
     )
 }
 
