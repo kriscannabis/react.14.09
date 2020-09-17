@@ -9,9 +9,6 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     filename: "[name].js",
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
   module: {
     rules: [
       {
@@ -32,4 +29,7 @@ module.exports = {
     port: 9000,
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 };

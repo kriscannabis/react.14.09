@@ -7,15 +7,13 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "[name].js",
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
+    filename: '[name].bundle.js'
+    
   },
   module: {
     rules: [
       {
-        test: /\.js(x)?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
@@ -26,9 +24,11 @@ module.exports = {
       },
     ],
   },
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     contentBase: path.join(__dirname, "build"),
     compress: true,
+    open: true,
     port: 9000,
   },
   plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
