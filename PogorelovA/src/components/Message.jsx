@@ -1,12 +1,7 @@
 import React from "react";
 
-const Message = ({ count }) => {
-  return (
-    <div>
-      <h3>Привет, я функциональнй компонент</h3>
-      <p>{count}</p>
-    </div>
-  );
+const Message = ({ item }) => {
+  return <li>{item}</li>;
 };
 
 export default Message;

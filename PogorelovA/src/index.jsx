@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Message from "./components/Message";
 
 class HelloMessage extends React.Component {
   constructor() {
@@ -7,9 +8,11 @@ class HelloMessage extends React.Component {
 
     this.state = {
       count: 0,
+      messages: [],
     };
 
     this.onClick = this.onClick.bind(this);
+    this.addMessage = this.addMessage.bind(this);
   }
 
   onClick() {
@@ -17,8 +20,13 @@ class HelloMessage extends React.Component {
     this.setState({ count: count + 1 });
   }
 
+  addMessage() {
+    const { messages, count } = this.state;
+    this.setState({ messages: [...messages, `новое сообщение ${count}`] });
+  }
+
   render() {
-    const { count } = this.state;
+    const { count, messages } = this.state;
 
     return (
       <div>
@@ -26,12 +34,15 @@ class HelloMessage extends React.Component {
         <p>from GeekBrains</p>
         <p>{count}</p>
         <button onClick={this.onClick}>increment</button>
+        <button onClick={this.addMessage}>add message</button>
+        <ul>
+          {messages.map((item, index) => (
+            <Message key={index} item={item} />
+          ))}
+        </ul>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <HelloMessage name="Taylor" />,
-  document.getElementById("hello-example")
-);
+ReactDOM.render(<HelloMessage name="Taylor" />, document.getElementById('hello-example'));
