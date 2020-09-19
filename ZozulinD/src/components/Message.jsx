@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Message = ({ message }) => {
-  return <li>{message}</li>;
+const Message = ({ message, author }) => {
+  return <li>{author ? `${author}: ${message}` : message}</li>;
 };
 
 export default Message;

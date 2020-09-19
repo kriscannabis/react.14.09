@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Message from './components/Message';
+import Messages from './components/Messages';
 
 class HelloMessage extends React.Component {
   constructor() {
@@ -30,7 +31,7 @@ class HelloMessage extends React.Component {
     const { count, messages } = this.state;
 
     return (
-      <div>
+      <>
         <h1>Hello {this.props.name}</h1>
         <p>from GeekBrains</p>
         <p>{count}</p>
@@ -41,7 +42,8 @@ class HelloMessage extends React.Component {
             return <Message key={index} message={message} />;
           })}
         </ul>
-      </div>
+        <Messages />
+      </>
     );
   }
 }
