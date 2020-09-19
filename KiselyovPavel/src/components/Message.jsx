@@ -1,17 +1,11 @@
-import React, { useState } from "react";
-const Message = () => {
-  const [items, addMessage] = useState([]);
-  let listItems=items.map(element=><li key={items.indexOf(element)}>{element}</li>);
+import React from "react";
+
+const Message = ({ author, message }) => {
   return (
-    <div>
-      <button onClick={()=>{
-        items.push('some message');
-       addMessage([...items]);
-      }}>message</button>
-      <ul>
-        {listItems}
-      </ul>
-    </div>
+    <li>
+      <span>{`${author}: ${message}`}</span>
+    </li>
   );
 };
+
 export default Message;
