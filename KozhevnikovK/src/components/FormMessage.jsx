@@ -10,6 +10,7 @@ class FormMessage extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const { addMessage } = this.props;
+    addMessage(this.state);
     console.log(this.state);
   };
 
