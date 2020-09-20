@@ -1,57 +1,71 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Message from './components/Message'
-
+import { v4 } from 'uuid';
+import MessageList from './components/MessageList';
+import FormMessage from './components/FormMessage';
 
 class MessageHistory extends React.Component {
-	constructor() {
-		super();
-		this.textInput = React.createRef();
+  state = {
+    messagesList: [],
+  };
 
-		this.state = {
-			count: 0,
-			message: '',
-			messagesList: []
+  /**
+   * Добавляет сообщение в общий список
+   * @param {Object} message
+   */
+  addMessage = (message) => {
+    const { messagesList } = this.state;
+    this.setState({
+      messagesList: [...messagesList, { id: v4(), ...message }],
+    });
+  };
 
-		};
+  /**
+   * В зависимости от числа, возвращает слово в правильном падеже.
+   * @param {number} amount число
+   * @throws {Error} ошибка
+   * @returns {string}
+   */
+  messageTextForm = (amount) => {
+    if (/([5-9,0]$)|([1][0-4]$)/gm.test(amount)) {
+      return 'сообщений';
+    } else if (/[1]$/gm.test(amount)) {
+      return 'сообщение';
+    } else if (/[2-4]$/gm.test(amount)) {
+      return 'сообщения';
+    }
+    throw new Error('Ошибка');
+  };
 
-		this.onClick = this.onClick.bind(this);
-		this.onInputChange = this.onInputChange.bind(this);
-	}
+  answerToMessage = (authorsName) => {
+    const array = this.state.messagesList.filter((el) => {
+      if (el.author == authorsName) {
+        return true;
+      }
+    });
+    console.log(array);
+    const messageForm = this.messageTextForm(array.length);
+    this.addMessage({
+      author: 'BOT',
+      messageText: `Вы отправили ${array.length} ${messageForm}`,
+    });
+  };
 
-	onInputChange(e) {
-		const { message } = this.state;
-		this.setState({ message: e.target.value });
-	}
-
-	onClick(e) {
-		e.preventDefault();
-		const { count, messagesList, message } = this.state;
-		this.setState({ count: count + 1 });
-		this.setState({ messagesList: [...messagesList, { id: count, name: 'You', text: message }] });
-		this.setState({ message: '' });
-		this.inputFocus();
-	}
-
-	inputFocus() { this.textInput.current.focus(); }
-
-	render() {
-		return (
-			<div>
-				<h1>Hello, {this.props.name}</h1>
-				{this.state.messagesList.map(item => (
-					<Message key={item.id} message={item} />
-				))}
-				<form onSubmit={this.onClick}>
-					<input ref={this.textInput} type="text" autoFocus={true} value={this.state.message} onChange={this.onInputChange} />
-					<button type="submit">Inc</button>
-				</form>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.props.name}</h1>
+        <MessageList
+          messageList={this.state.messagesList}
+          answerToMessage={this.answerToMessage}
+        />
+        <FormMessage addMessage={this.addMessage} />
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(
-	<MessageHistory name="Bob" />,
-	document.getElementById("hello-ex")
+  <MessageHistory name="Bob" />,
+  document.getElementById('hello-ex'),
 );
