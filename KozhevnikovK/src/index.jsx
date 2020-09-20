@@ -17,9 +17,9 @@ class HelloMessage extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
       const {messages} = this.state;
-      if (messages.length % 2 === 0) {
+      if (messages[messages.length - 1].author !== "Bot") {
           setTimeout(() => {
-              this.addMessage({ author: "Бот", message: "Привет! Я бот"})
+              this.addMessage({ author: "Bot", message: "Привет! Я бот"})
               }, 1000);
       }
   }
