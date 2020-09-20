@@ -26,7 +26,7 @@ class MessageHistory extends React.Component {
   answerToMessage = () => {
     this.addMessage({
       author: 'BOT',
-      messageText: `Сообщение получено`,
+      messageText: `${this.props.name}, в чате больше никого нет. Кому ты пишешь?`,
     });
   };
 
