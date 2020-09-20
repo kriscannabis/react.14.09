@@ -1,24 +1,39 @@
-import React from 'react';
-import ReactDom from 'react-dom';
-import Message from './components/Messages';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+// import Message from './components/Message';
 
-const button = document.querySelector('#add-message');
 let messages = ['Привет!', 'Как дела?'];
 
-const MessageField = (props) => {
-  return props.messages.map((message, index) => <Message key={ index } text={ message }/>)
-};
+class MessageComponent extends Component {
+  constructor() {
+    super();
 
-const render = () => {
-  ReactDom.render(
-    <MessageField messages={ messages } />,
-    document.getElementById('root'),
-  );
-};
+    this.state = {
+      messages: messages,
+    }
+  }
 
-render();
+  onClick = () => {
+    const { messages } = this.state;
+    this.setState({messages: [...messages, 'Нормально']});
+  };
 
-button.addEventListener('click', () => {
-  messages.push('Нормально');
-  render();
-});
+  render() {
+    const { messages } = this.state;
+    return (
+      <div>
+        <button onClick={this.onClick}>Add message</button>
+        <ul>
+          {messages.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
+  <MessageComponent/>,
+  document.getElementById('root'),
+);
