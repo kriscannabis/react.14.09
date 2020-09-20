@@ -21,33 +21,12 @@ class MessageHistory extends React.Component {
   };
 
   /**
-   * В зависимости от числа, возвращает слово в правильном падеже.
-   * @param {number} amount число
-   * @throws {Error} ошибка
-   * @returns {string}
+   * Автоответ бота
    */
-  messageTextForm = (amount) => {
-    if (/([5-9,0]$)|([1][0-4]$)/gm.test(amount)) {
-      return 'сообщений';
-    } else if (/[1]$/gm.test(amount)) {
-      return 'сообщение';
-    } else if (/[2-4]$/gm.test(amount)) {
-      return 'сообщения';
-    }
-    throw new Error('Ошибка');
-  };
-
-  answerToMessage = (authorsName) => {
-    const array = this.state.messagesList.filter((el) => {
-      if (el.author == authorsName) {
-        return true;
-      }
-    });
-    console.log(array);
-    const messageForm = this.messageTextForm(array.length);
+  answerToMessage = () => {
     this.addMessage({
       author: 'BOT',
-      messageText: `Вы отправили ${array.length} ${messageForm}`,
+      messageText: `Сообщение получено`,
     });
   };
 

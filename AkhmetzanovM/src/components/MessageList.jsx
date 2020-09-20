@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Message from './Message';
 
 class MessageList extends Component {
+  /**
+   * Проверяет, чьё сообщение было последним и если это не бот, то запускает родительский метод автоответа
+   */
   componentDidUpdate() {
     const { messageList, answerToMessage } = this.props;
     if (messageList[messageList.length - 1].author != 'BOT') {
