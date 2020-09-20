@@ -7,7 +7,6 @@ class FormMessage extends Component {
   }
 
   state = {
-    author: 'Вы',
     messageText: '',
   };
 
@@ -33,8 +32,8 @@ class FormMessage extends Component {
    */
   onSubmit = (event) => {
     event.preventDefault();
-    const { addMessage } = this.props;
-    addMessage(this.state);
+    const { addMessage, userName } = this.props;
+    addMessage({ author: userName, messageText: this.state.messageText });
     this.setState({
       messageText: '',
     });

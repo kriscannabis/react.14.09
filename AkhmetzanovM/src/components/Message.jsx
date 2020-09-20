@@ -1,11 +1,14 @@
 import React from 'react';
 
-const Message = ({ message }) => {
-	return (
-		<div>
-			<p>{message.author}: {message.messageText}</p>
-		</div>
-	);
-}
+const Message = ({ message, userName }) => {
+  return (
+    <div>
+      <p>
+        {message.author == userName ? 'Вы' : message.author}:{' '}
+        {message.messageText}
+      </p>
+    </div>
+  );
+};
 
 export default Message;
