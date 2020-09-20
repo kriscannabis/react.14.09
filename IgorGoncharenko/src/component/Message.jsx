@@ -1,5 +1,8 @@
-import React from "react";
-export function Message(props) {
-  const messageItem = props.items.map((item, i) => <div key={i}>{item}</div>);
-  return <div>{messageItem}</div>;
+import ​ React ​ from ​ 'react'​ ;
+
+export default class ​ Message ​ extends ​ React.​ Component ​ {
+​ 
+​ render​ () {
+​ return ​ <div>​ { ​ this​ .​ props​ .​ text ​ }​ </div>
+​ }
 }
