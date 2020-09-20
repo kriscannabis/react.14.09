@@ -1,57 +1,54 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Message from './components/Message'
-
+import { v4 } from 'uuid';
+import MessageList from './components/MessageList';
+import FormMessage from './components/FormMessage';
 
 class MessageHistory extends React.Component {
-	constructor() {
-		super();
-		this.textInput = React.createRef();
+  state = {
+    messagesList: [],
+  };
 
-		this.state = {
-			count: 0,
-			message: '',
-			messagesList: []
+  /**
+   * Добавляет сообщение в общий список
+   * @param {Object} message
+   */
+  addMessage = (message) => {
+    const { messagesList } = this.state;
+    this.setState({
+      messagesList: [...messagesList, { id: v4(), ...message }],
+    });
+  };
 
-		};
+  /**
+   * Автоответ бота
+   */
+  answerToMessage = () => {
+    this.addMessage({
+      author: 'BOT',
+      messageText: `${this.props.userName}, в чате больше никого нет. Кому ты пишешь?`,
+    });
+  };
 
-		this.onClick = this.onClick.bind(this);
-		this.onInputChange = this.onInputChange.bind(this);
-	}
-
-	onInputChange(e) {
-		const { message } = this.state;
-		this.setState({ message: e.target.value });
-	}
-
-	onClick(e) {
-		e.preventDefault();
-		const { count, messagesList, message } = this.state;
-		this.setState({ count: count + 1 });
-		this.setState({ messagesList: [...messagesList, { id: count, name: 'You', text: message }] });
-		this.setState({ message: '' });
-		this.inputFocus();
-	}
-
-	inputFocus() { this.textInput.current.focus(); }
-
-	render() {
-		return (
-			<div>
-				<h1>Hello, {this.props.name}</h1>
-				{this.state.messagesList.map(item => (
-					<Message key={item.id} message={item} />
-				))}
-				<form onSubmit={this.onClick}>
-					<input ref={this.textInput} type="text" autoFocus={true} value={this.state.message} onChange={this.onInputChange} />
-					<button type="submit">Inc</button>
-				</form>
-			</div>
-		);
-	}
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.props.userName}</h1>
+        <MessageList
+          messageList={this.state.messagesList}
+          answerToMessage={this.answerToMessage}
+          userName={this.props.userName}
+        />
+        <FormMessage
+          addMessage={this.addMessage}
+          userName={this.props.userName}
+        />
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(
-	<MessageHistory name="Bob" />,
-	document.getElementById("hello-ex")
+  <MessageHistory userName="Bob" />,
+  document.getElementById('hello-ex'),
 );
