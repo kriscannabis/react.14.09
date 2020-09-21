@@ -1,13 +1,15 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './FormMessage.module.css';
 
 class FormMessage extends Component {
   state = {
-    author: "",
-    message: "",
+    author: '',
+    message: '',
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
+    console.log(e);
     e.preventDefault();
     const { addMessage } = this.props;
     addMessage(this.state);
@@ -24,27 +26,17 @@ class FormMessage extends Component {
   render() {
     const { author, message } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className={styles.list} onSubmit={this.onSubmit}>
         <div>
           <label>
             <span>Author: </span>
-            <input
-              type="text"
-              name="author"
-              onChange={this.onChange}
-              value={author}
-            />
+            <input type="text" name="author" onChange={this.onChange} value={author} />
           </label>
         </div>
         <div>
           <label>
             <span>Text: </span>
-            <input
-              type="text"
-              name="message"
-              onChange={this.onChange}
-              value={message}
-            />
+            <input type="text" name="message" onChange={this.onChange} value={message} />
           </label>
         </div>
         <button type="submit">Add</button>
@@ -54,7 +46,7 @@ class FormMessage extends Component {
 }
 
 FormMessage.propTypes = {
-  prop: PropTypes,
+  addMessage: PropTypes.func.isRequired,
 };
 
 export default FormMessage;
