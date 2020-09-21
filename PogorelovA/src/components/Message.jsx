@@ -6,6 +6,7 @@ const Message = ({ author, message }) => {
       <span>{`${author}: ${message}`}</span>
     </li>
   );
+
 };
 
 export default Message;
