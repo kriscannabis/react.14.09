@@ -1,53 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Message from './components/Message';
+import React, { Component, Fragment } from "react";
+import ReactDOM from "react-dom";
+import { v4 as uuidv4 } from "uuid";
+import FormMessage from "./components/FormMessage/FormMessage";
 
-class HelloMessage extends React.Component {
-    constructor() {
-        super();
+class HelloMessage extends Component {
+  state = {
+    messages: [
+      {
+        id: uuidv4(),
+        number: Math.floor(Math.random() * 100 + 1),
+        author: "Bot",
+        message: "Привет. Я бот. Напиши команду, и я выполню ее.",
+      },
+    ],
+  };
 
-        this.state = {
-            count: 1,
-            messages: [],
-        };
-
-        this.onClick = this.onClick.bind(this);
-        this.addMessage = this.addMessage.bind(this);
-    }
-
-    onClick() {
-        const { count } = this.state;
-        this.setState({ count: count + 1 });
-    }
-
-    addMessage() {
-        const { messages, count } = this.state;
-        this.setState({
-            count: count + 1,
-            messages: [...messages, `Message №${count}`],
+  componentDidUpdate(prevProps, prevState) {
+    const { messages } = this.state;
+    if (messages.length % 2 == 0) {
+      setTimeout(() => {
+        this.addMessage({
+          author: "Bot",
+          message: "Неизвестная команда. Попробуй еще раз!",
         });
+      }, 500);
     }
+  }
 
-    render() {
-        const { count, messages } = this.state;
-        return (
-            <div>
-                <h1>Hello {this.props.name}</h1>
-                <p>from GeekBrains</p>
-                <p>{count}</p>
-                <button onClick={this.onClick}>Increment</button>
-                <button onClick={this.addMessage}>Add new message</button>
-                <ul>
-                    {messages.map((item, index) => (
-                        <Message key={index} item={item} />
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+  addMessage = (message) => {
+    const { messages } = this.state;
+
+    this.setState({ messages: [...messages, { ...message, id: uuidv4() }] });
+  };
+
+  render() {
+    const { messages } = this.state;
+
+    return (
+      <div>
+        <h1>Hello {this.props.name}</h1>
+        <p>from GeekBrains</p>
+        <FormMessage messages={messages} addMessage={this.addMessage} />
+      </div>
+    );
+  }
 }
 
-ReactDOM.render(
-    <HelloMessage name="Taylor" />,
-    document.getElementById('hello-example')
-);
+ReactDOM.render(<HelloMessage />, document.getElementById("root"));
