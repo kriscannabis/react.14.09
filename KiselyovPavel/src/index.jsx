@@ -1,31 +1,43 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
-import Message from './components/Message.jsx';
-class HelloMessage extends React.Component {
-  constructor() {
-    super();
+import { v4 as uuidv4 } from "uuid";
+import FormMessage from "./components/FormMessage";
+import Message from "./components/Message";
 
-    this.state = {
-      count: 0,
-    };
+class HelloMessage extends Component {
+  state = {
+    messages: [
+      {
+        id: uuidv4(),
+        author: "Bot",
+        message: "Привет от бота",
+      },
+    ],
+  };
+  addMessage = (message) => {
+    const { messages } = this.state;
+    this.setState({ messages: [...messages, { ...message, id: uuidv4() }] });
+  };
 
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick() {
-    const { count } = this.state;
-    this.setState({ count: count + 1 });
+  componentDidUpdate = () => {
+    if (this.state.messages[this.state.messages.length-1].author !== 'Bot') {
+      setTimeout( () => this.addMessage({author: 'Bot',message:'Привет от бота'}),1000);
+      
+    }
   }
   render() {
-    const { count } = this.state;
+    const { messages } = this.state;
 
     return (
       <div>
         <h1>Hello {this.props.name}</h1>
         <p>from GeekBrains</p>
-        <p>{count}</p>
-        <button onClick={this.onClick}>increment</button>
-        <Message/>
+        <ul>
+          {messages.map(({ id, author, message }) => (
+            <Message key={id} author={author} message={message} />
+          ))}
+        </ul>
+        <FormMessage addMessage={this.addMessage} />
       </div>
     );
   }
@@ -33,5 +45,5 @@ class HelloMessage extends React.Component {
 
 ReactDOM.render(
   <HelloMessage name="Taylor" />,
-  document.getElementById("hello-example")
+  document.getElementById("root")
 );
