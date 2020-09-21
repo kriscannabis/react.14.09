@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 
-const Message = (state) => {
-  return (
-    console.log(state)
-    //<li>{ props.text }</li>
-    // props.messages.map((message, index) => <li key={ index } text={ message }></li>)
-  )
-};
+class Message extends Component {
+  // static propTypes = {
+  //   text: PropTypes.object.isRequired,
+  // };
+
+  render() {
+    return (
+      <li>{ this.props.text } -> Send: {this.props.author}</li>
+    );
+  }
+}
 
 export default Message;

@@ -1,33 +1,20 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-// import Message from './components/Message';
-
-let messages = ['Привет!', 'Как дела?'];
+import MessageField from './components/MessageField';
+import {v4 as uuidv4} from "uuid";
 
 class MessageComponent extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      messages: messages,
-    }
-  }
-
-  onClick = () => {
+  addMessage = (message) => {
     const { messages } = this.state;
-    this.setState({messages: [...messages, 'Нормально']});
+
+    this.setState({ messages: [...messages, { ...message, id: uuidv4() }] });
   };
 
-  render() {
-    const { messages } = this.state;
+  render = () => {
     return (
       <div>
-        <button onClick={this.onClick}>Add message</button>
-        <ul>
-          {messages.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
+        <MessageField addMessage={this.addMessage} />
       </div>
     );
   }
