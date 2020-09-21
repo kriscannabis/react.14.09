@@ -1,7 +1,11 @@
 import React from 'react'
 
-const Message = ({ item }) => {
-    return <li>{item}</li>
+const Message = ({ name, author, message }) => {
+    return (
+        <li>
+            <span>{`${author}: ${message}`}</span>
+        </li>
+    );
 }
 
 export default Message
