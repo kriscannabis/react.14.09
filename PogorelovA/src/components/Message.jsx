@@ -7,6 +7,7 @@ const Message = ({ count }) => {
       <p>{count}</p>
     </div>
   );
+
 };
 
 export default Message;
