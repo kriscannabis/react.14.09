@@ -1,46 +1,47 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import Message from "./Components/Message";
+import React, { Component, Fragment } from "react";
+import ReactDOM from "react-dom";
+import { v4 as uuidv4 } from "uuid";
+import FormMessage from "./components/FormMessage";
 
 
-class HelloMessage extends React.Component {
-    constructor() {
-        super();
 
-        this.state = {
-            count: 0,
-            messages : [],
+class HelloMessage extends Component {
+        state = {
+            messages: [
+                {
+                    id: uuidv4(),
+                    author: "Bot",
+                    message: "Привет от бота",
+                },
+            ],
         };
 
-        this.onClick = this.onClick.bind(this);
-        this.addMessage = this.addMessage.bind(this);
+    componentDidUpdate(prevProps, prevState) {
+        const {messages} = this.state;
+        if (messages.length % 2 === 0) {
+            this.addMessage({author: 'Bot', message: 'Привет, я бот'})
+        }
     }
 
-    onClick() {
-        const { count } = this.state;
-        this.setState({ count: count + 1 });
-    }
-
-    addMessage() {
-        const { messages, count } = this.state;
-        this.setState({messages: [...messages, `новое сообщение ${count}`]});
-    }
+    addMessage = (message) => {
+        const { messages } = this.state;
+        this.setState({messages: [...messages, {...message, id: uuidv4() }] });
+    };
 
     render() {
-        const { count, messages } = this.state;
+        const { messages } = this.state;
 
         return (
             <div>
                 <h1>Hello {this.props.name}</h1>
                 <p>from GeekBrains</p>
-                <p>{count}</p>
-                <button onClick={this.onClick}>increment</button>
-                <button onClick={this.addMessage}>add message</button>
                 <ul>
-                    {messages.map((item, index) => (
-                        <Message key = {index} item={item}/>
+                    {messages.map(({ id, author, message }) => (
+                        <Message key={id} author={author} message={message} />
                     ))}
                 </ul>
+                <FormMessage addMessage={this.addMessage} />
             </div>
         );
     }
@@ -48,5 +49,5 @@ class HelloMessage extends React.Component {
 
 ReactDOM.render(
     <HelloMessage name="Taylor" />,
-    document.getElementById("hello-example")
+    document.getElementById("root")
 );
