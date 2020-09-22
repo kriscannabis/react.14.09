@@ -1,12 +1,14 @@
-import React from "react"
+import React from "react";
 
-const Message = ({item}) => {
+const Message = ({ author, message }) => {
+
     return (
-        <div>
-            <li>{ item }</li>
-        </div>
-    )
-}
-export default Message
+        <li>
+            <span>{ `${author}: ${message}` }</span>
+        </li>
+    );
+};
+
+export default Message;
 
 

@@ -1,8 +1,10 @@
 import React from "react";
 
-const Message = ({ item }) => {
+const Message = ({ author, message }) => {
     return (
-        <li>{item}</li>
+        <li>
+            <span>{`${author}: ${message}`}</span>
+        </li>
     );
 };
 
