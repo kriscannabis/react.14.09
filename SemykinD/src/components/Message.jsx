@@ -8,7 +8,7 @@ class Message extends Component {
 
   render() {
     return (
-      <li>{ this.props.text } -> Send: {this.props.author}</li>
+      <li>{ this.props.author }: {this.props.message}</li>
     );
   }
 }
