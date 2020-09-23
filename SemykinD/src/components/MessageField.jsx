@@ -1,55 +1,57 @@
 import React, { Component } from 'react';
-import Message from './Message';
-import { v4 as uuidv4 } from 'uuid';
 
 class MessageField extends Component {
   state = {
-    messages: [
-      {
-        id: uuidv4(),
-        author: 'Bot',
-        message: 'Я бот, чего ты от меня хочешь, кожаный мешок?'
-      },
-    ],
+    author: '',
+    message: ''
   };
 
-  onClick = () => {
-    const { messages } = this.state;
-    this.setState({messages: [...messages, {
-      id: uuidv4(),
-      author: 'User',
-      message: 'Привет!'
-    }]});
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { addMessage } = this.props;
+    addMessage(this.state);
+    this.setState({
+      author: '',
+      message: ''
+    })
   };
 
+  onChange = ({ target }) => {
+    const { value, name } = target;
 
-  componentDidUpdate(prevProps ,prevState) {
-    if (prevState.messages[prevState.messages.length - 1].author === 'Bot') {
-      setTimeout(() =>
-        this.setState({
-          messages: [...this.state.messages, {
-            id: uuidv4(),
-            author: 'Bot',
-            message: 'Не приставай ко мне, я бот!'
-          }]
-        }), 2000
-      )
-    }
-  }
-
+    this.setState({
+      [name]: value,
+    });
+  };
 
   render () {
-    const { messages } = this.state;
+    const { author, message } = this.state;
     return (
-      <div>
-        <h1>{this.state.text}</h1>
-        <button onClick={this.onClick}>Add message</button>
-        <ul>
-          {messages.map((message) => (
-            <Message key={message.id} text={message.message} id={message.id} author={message.author}/>
-          ))}
-        </ul>
-      </div>
+      <form onSubmit={this.onSubmit}>
+        <div>
+          <label>
+            <span>Author: </span>
+            <input
+              type="text"
+              name="author"
+              onChange={this.onChange}
+              value={author}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            <span>Text: </span>
+            <input
+              type="text"
+              name="message"
+              onChange={this.onChange}
+              value={message}
+            />
+          </label>
+        </div>
+        <button type="submit">Add</button>
+      </form>
     )
   }
 }
