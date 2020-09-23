@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MessageField from './components/MessageField';
 import Message from './components/Message';
 import {v4 as uuidv4} from "uuid";
+import './css/styles.css';
 
 class MessageComponent extends Component {
   state = {
@@ -34,14 +35,12 @@ class MessageComponent extends Component {
   render = () => {
     const { messages } = this.state;
     return (
-      <div>
-        <ul>
-          {messages.map(({ id, author, message }) => (
-            <Message key={id} author={author} message={message} />
-          ))}
-        </ul>
+      <>
+        {messages.map(({ id, author, message }) => (
+          <Message key={id} author={author} message={message} />
+        ))}
         <MessageField addMessage={this.addMessage} />
-      </div>
+      </>
     );
   }
 }
