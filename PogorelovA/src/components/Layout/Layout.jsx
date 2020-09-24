@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, withStyles } from '@material-ui/core';
+import { Container, Paper, withStyles } from '@material-ui/core';
 import FormMessage from '../FormMessage';
 import Header from '../Header';
-import Message from '../Message';
 import ChatList from '../ChatList';
+import MessageList from '../MessageList/MessageList';
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
   },
-};
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginTop: theme.spacing(9),
+  },
+});
 
-class HelloMessage extends Component {
+class Layout extends Component {
   state = {
     messages: [
       {
@@ -47,15 +54,20 @@ class HelloMessage extends Component {
       <div className={classes.root}>
         <Header />
         <ChatList />
-        <ul className="list">
-          {messages.map(({ id, author, message }) => (
-            <Message key={id} author={author} message={message} />
-          ))}
-        </ul>
-        <FormMessage addMessage={this.addMessage} />
+        <Container maxWidth="md" classes={{ root: classes.container }}>
+          <MessageList messages={messages} />
+          <FormMessage addMessage={this.addMessage} />
+        </Container>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(HelloMessage);
+Layout.propTypes = {
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    container: PropTypes.string,
+  }).isRequired,
+};
+
+export default withStyles(styles)(Layout);
