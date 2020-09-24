@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 
 class MessageField extends Component {
   state = {
