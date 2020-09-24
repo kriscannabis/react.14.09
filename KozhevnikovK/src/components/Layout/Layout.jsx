@@ -6,10 +6,25 @@ import Header from '../Header';
 import Message from '../Message';
 import ChatList from '../ChatList';
 
+
 const styles = {
   root: {
     display: 'flex',
     minHeight: '100vh',
+    '& .list': {
+      color: '#ccc',
+      justifyContent: "flex-end",
+      listStyle: 'none'
+    },
+    '& .listItem': {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center"
+    },
+    '& .author-bot': {
+      color: '#958080',
+      float: "right"
+    }
   },
 };
 
@@ -47,7 +62,7 @@ class HelloMessage extends Component {
       <div className={classes.root}>
         <Header />
         <ChatList />
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "center", width: "100%"}}>
+        <div className='listItem'>
           <ul className="list">
             {messages.map(({ id, author, message }) => (
               <Message key={id} author={author} message={message} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -22,6 +23,7 @@ class FormMessage extends Component {
     e.preventDefault();
     const { addMessage } = this.props;
     addMessage(this.state);
+    this.setState({author: "", message: ""});
   };
 
   onChange = ({ target }) => {
@@ -51,7 +53,7 @@ class FormMessage extends Component {
           value={message}
           autoComplete="off"
         />
-        <button type="submit">Add</button>
+        <Button variant="contained" color="primary" type="submit">Add</Button>
       </form>
     );
   }
