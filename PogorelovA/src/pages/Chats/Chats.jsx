@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import produce from 'immer';
 import MessageList from '../../components/MessageList';
 import FormMessage from '../../components/FormMessage';
 import Layout from '../../components/Layout/Layout';
@@ -60,6 +61,14 @@ class Chats extends Component {
       },
       messages: { ...messages, [newId]: { id: newId, author, message } },
     }));
+
+    // with Immer.js
+    // this.setState(prevState =>
+    //   produce(prevState, draft => {
+    //     draft.chats[id].messageList.push(newId);
+    //     draft.messages[newId] = { id: newId, author, message };
+    //   }),
+    // );
   };
 
   render() {
