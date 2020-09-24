@@ -11,7 +11,9 @@ const RootRouter = () => {
         <Home />
       </Route>
       <Route path="/chats/:id" component={Chats} />
-      <Route path="/about" component={About} />
+      <Route path="/about">
+        <About />
+      </Route>
       <Route
         render={() => (
           <div>
