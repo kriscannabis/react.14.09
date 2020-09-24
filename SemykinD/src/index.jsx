@@ -4,6 +4,7 @@ import MessageField from './components/MessageField';
 import Message from './components/Message';
 import {v4 as uuidv4} from "uuid";
 import './css/styles.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class MessageComponent extends Component {
   state = {
@@ -46,6 +47,8 @@ class MessageComponent extends Component {
 }
 
 ReactDOM.render(
-  <MessageComponent/>,
+  <MuiThemeProvider>
+    <MessageComponent/>
+  </MuiThemeProvider>,
   document.getElementById('root'),
 );
