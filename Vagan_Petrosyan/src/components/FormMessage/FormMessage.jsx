@@ -1,5 +1,17 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+        root: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: theme.spacing(4),
+        padding: theme.spacing(2),
+        },
+    }
+);
 
 class FormMessage extends Component {
     state = {
@@ -22,9 +34,11 @@ class FormMessage extends Component {
     };
 
     render() {
+        const { classes } = this.props;
         const { author, message } = this.state
         return (
-            <form onSubmit={this.onSubmit}>
+            <form className={classes.root} onSubmit={this.onSubmit}>
+                <TextField placeholder='author' name='author' />
                 <div>
                     <label>
                         <span>Author: </span>
@@ -43,7 +57,8 @@ class FormMessage extends Component {
 }
 
 FormMessage.prototypes = {
-    prop: PropTypes,
+    addMessage: PropTypes.func.isRequired,
+    classes: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default FormMessage;
+export default withStyles(styles)(FormMessage);
