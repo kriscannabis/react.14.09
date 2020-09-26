@@ -3,19 +3,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/index.jsx'
+    app: './src/index.jsx',
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].js'
+    filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
-    port: 9000
+    port: 9000,
   },
   plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
   module: {
@@ -27,11 +27,14 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ["@babel/plugin-proposal-class-properties"]
-          }
-        }
-      }
-    ]
-  }
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        },
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 };
-
