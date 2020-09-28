@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 // import PropTypes from 'prop-types';
 
 class Message extends Component {
@@ -8,7 +9,12 @@ class Message extends Component {
 
   render() {
     return (
-      <li>{ this.props.text } -> Send: {this.props.author}</li>
+      <div
+      className='message'
+      style={{ alignSelf: this.props.author === 'Bot' ? 'flex-start' : 'flex-end' }}>
+        <div> {this.props.message} </div>
+        <div className='message-sender'>{ this.props.author }</div>
+      </div>
     );
   }
 }
