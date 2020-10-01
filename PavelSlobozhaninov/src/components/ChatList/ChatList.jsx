@@ -16,6 +16,9 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import cn from 'classnames';
 import { NavLink, Link } from 'react-router-dom';
 import mockChats from './mockChats';
+import {bindActionCreators} from "redux";
+import connect from "react-redux/es/connect/connect";
+import { addChat } from '../../actions/chatActions';
 
 const useStyles = makeStyles(theme => ({
   drawerPaper: {
@@ -87,4 +90,11 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
